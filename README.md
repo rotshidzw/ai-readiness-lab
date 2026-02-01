@@ -21,7 +21,7 @@ Portfolio-grade full-stack AI learning and prompt practice studio with a premium
 
 ### 1) Install dependencies
 ```bash
-pnpm install
+npm install
 ```
 
 ### 2) Start Postgres (Docker)
@@ -43,24 +43,24 @@ OPENAI_MODEL="gpt-4o-mini" # optional
 
 ### 4) Initialize database + seed
 ```bash
-pnpm db:push
-pnpm seed
+npm run db:push
+npm run seed
 ```
 
 ### 5) Run the app
 ```bash
-pnpm dev
+npm run dev
 ```
 
 ## Scripts
-- `pnpm dev` - start web app
-- `pnpm build` - production build
-- `pnpm lint` - lint
-- `pnpm format` - format check
-- `pnpm db:push` - push prisma schema
-- `pnpm db:migrate` - create migrations
-- `pnpm db:studio` - prisma studio
-- `pnpm seed` - seed database
+- `npm run dev` - start web app
+- `npm run build` - production build
+- `npm run lint` - lint
+- `npm run format` - format check
+- `npm run db:push` - push prisma schema
+- `npm run db:migrate` - create migrations
+- `npm run db:studio` - prisma studio
+- `npm run seed` - seed database
 
 ## Screenshots
 - Landing page: `docs/screenshots/landing.png`
