@@ -1,0 +1,15 @@
+{
+  "name": "lumina-ai-studio",
+  "private": true,
+  "packageManager": "pnpm@9.7.0",
+  "scripts": {
+    "dev": "pnpm -C apps/web dev",
+    "build": "pnpm -C apps/web build",
+    "lint": "pnpm -C apps/web lint",
+    "format": "pnpm -C apps/web format",
+    "db:push": "pnpm -C packages/db db:push",
+    "db:migrate": "pnpm -C packages/db db:migrate",
+    "db:studio": "pnpm -C packages/db db:studio",
+    "seed": "pnpm -C packages/db seed"
+  }
+}
