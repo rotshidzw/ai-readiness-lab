@@ -32,15 +32,9 @@ docker compose up -d
 ```
 
 ### 3) Configure environment variables
-Create `apps/web/.env.local`:
+Copy `.env.example` to `apps/web/.env.local` (or create it manually):
 ```bash
-DATABASE_URL="postgresql://lumina:lumina@localhost:5434/lumina"
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="dev-secret"
-GITHUB_ID="your-github-client-id"
-GITHUB_SECRET="your-github-client-secret"
-OPENAI_API_KEY="" # optional
-OPENAI_MODEL="gpt-4o-mini" # optional
+cp .env.example apps/web/.env.local
 ```
 
 ### 4) Initialize database + seed
@@ -48,6 +42,8 @@ OPENAI_MODEL="gpt-4o-mini" # optional
 npm run db:push
 npm run seed
 ```
+
+> Note: `db:push` requires `DATABASE_URL` to be defined (set by `.env.local`) and Docker Postgres running.
 
 ### 5) Run the app
 ```bash
