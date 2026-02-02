@@ -32,9 +32,10 @@ docker compose up -d
 ```
 
 ### 3) Configure environment variables
-Copy `.env.example` to `apps/web/.env.local` (or create it manually):
+Copy `.env.example` to `apps/web/.env.local` and `packages/db/.env` (Prisma loads env from the package folder):
 ```bash
 cp .env.example apps/web/.env.local
+cp packages/db/.env.example packages/db/.env
 ```
 
 ### 4) Initialize database + seed
@@ -43,7 +44,7 @@ npm run db:push
 npm run seed
 ```
 
-> Note: `db:push` requires `DATABASE_URL` to be defined (set by `.env.local`) and Docker Postgres running.
+> Note: `db:push` requires `DATABASE_URL` to be defined (set in `packages/db/.env`) and Docker Postgres running.
 
 ### 5) Run the app
 ```bash

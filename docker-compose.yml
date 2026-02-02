@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: lumina
       POSTGRES_DB: lumina
     ports:
-      - "5434:5432"
+      - "5435:5432"
     volumes:
       - lumina_pgdata:/var/lib/postgresql/data
 
