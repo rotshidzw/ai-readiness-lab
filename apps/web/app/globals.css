@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.glass {
+  @apply border border-white/10 bg-white/5 backdrop-blur-[18px];
+}
+
+.gradient-orb {
+  background: radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.55), transparent 60%),
+    radial-gradient(circle at 70% 40%, rgba(14, 165, 233, 0.55), transparent 55%),
+    radial-gradient(circle at 50% 70%, rgba(59, 130, 246, 0.45), transparent 60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe\:animate-float {
+    animation: none !important;
+  }
+}

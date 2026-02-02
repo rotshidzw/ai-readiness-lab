@@ -1,0 +1,22 @@
+{
+  "name": "@lumina/db",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "db:push": "dotenv -e ../../apps/web/.env.local -e ./.env -- prisma db push",
+    "db:migrate": "dotenv -e ../../apps/web/.env.local -e ./.env -- prisma migrate dev",
+    "db:studio": "dotenv -e ../../apps/web/.env.local -e ./.env -- prisma studio",
+    "seed": "dotenv -e ../../apps/web/.env.local -e ./.env -- ts-node --compiler-options {\"module\":\"NodeNext\"} prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.4.2",
+    "prisma": "^5.18.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
