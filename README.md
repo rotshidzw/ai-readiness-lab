@@ -24,6 +24,8 @@ Portfolio-grade full-stack AI learning and prompt practice studio with a premium
 npm install
 ```
 
+> If your npm version does not support the `workspace:` protocol, this repo already uses local `file:` workspace links.
+
 ### 2) Start Postgres (Docker)
 ```bash
 docker compose up -d
