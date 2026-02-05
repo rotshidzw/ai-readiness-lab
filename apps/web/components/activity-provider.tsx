@@ -40,6 +40,11 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
   });
 
   const createLog = trpc.activity.create.useMutation();
+  const createLogRef = React.useRef(createLog.mutate);
+
+  React.useEffect(() => {
+    createLogRef.current = createLog.mutate;
+  }, [createLog.mutate]);
 
   const addLog = React.useCallback(
     (entry: Omit<ActivityLog, "id" | "createdAt">) => {
@@ -49,14 +54,14 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         createdAt: new Date(),
       };
       setLogs((prev) => [newLog, ...prev].slice(0, 200));
-      createLog.mutate({
+      createLogRef.current({
         eventType: entry.eventType,
         message: entry.message,
         metadata: entry.metadata,
         privateMode,
       });
     },
-    [createLog, privateMode],
+    [privateMode],
   );
 
   const togglePrivateMode = () => setPrivateMode((prev) => !prev);
