@@ -43,7 +43,7 @@ npm run db:push
 npm run seed
 ```
 
-> Note: `db:push` requires `DATABASE_URL` to be defined (set in `apps/web/.env.local`) and Docker Postgres running.
+> Note: `db:push` requires `DATABASE_URL` to be defined (set in `apps/web/.env.local`) and Docker Postgres running. The script installs local dependencies in `packages/db` to satisfy Prisma client generation.
 
 ### 5) Run the app
 ```bash

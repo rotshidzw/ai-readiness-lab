@@ -5,6 +5,7 @@
   "main": "index.ts",
   "types": "index.ts",
   "scripts": {
+    "predb:push": "npm install --no-workspaces",
     "db:push": "dotenv -e ../../apps/web/.env.local -e ./.env -- prisma db push",
     "db:migrate": "dotenv -e ../../apps/web/.env.local -e ./.env -- prisma migrate dev",
     "db:studio": "dotenv -e ../../apps/web/.env.local -e ./.env -- prisma studio",
