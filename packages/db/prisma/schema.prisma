@@ -111,6 +111,7 @@ model Quiz {
   lesson    Lesson         @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   title     String
   questions QuizQuestion[]
+  attempts  QuizAttempt[]
 }
 
 model QuizQuestion {
