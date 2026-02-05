@@ -5,13 +5,91 @@ import { prisma } from "@lumina/db";
 import { getAuthSession } from "@/lib/auth";
 
 export const createContext = async () => {
-  const session = await getAuthSession();
+  const hasDatabase = Boolean(process.env.DATABASE_URL);
+  let session = null;
+  if (hasDatabase) {
+    try {
+      session = await getAuthSession();
+    } catch {
+      session = null;
+    }
+  }
   return { session, prisma };
 };
 
 const t = initTRPC.context<typeof createContext>().create({
   transformer: superjson,
 });
+
+const hasDatabase = Boolean(process.env.DATABASE_URL);
+
+const demoCourses = [
+  {
+    id: "course-demo-1",
+    title: "AI Foundations",
+    description: "Core concepts, terminology, and safe prompting basics.",
+    level: "Beginner",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    authorId: null,
+    modules: [
+      {
+        id: "module-demo-1",
+        title: "Intro to Generative AI",
+        courseId: "course-demo-1",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        lessons: [
+          {
+            id: "lesson-demo-1",
+            title: "What is a model?",
+            content: "A model is a learned system that predicts outputs from inputs.",
+            moduleId: "module-demo-1",
+            order: 1,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+          {
+            id: "lesson-demo-2",
+            title: "Prompt anatomy",
+            content: "Good prompts include role, task, constraints, and examples.",
+            moduleId: "module-demo-1",
+            order: 2,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const demoPromptTemplates = [
+  {
+    id: "template-demo-1",
+    title: "System Role + Constraints",
+    category: "Prompt Pattern",
+    content: "You are a helpful tutor. Explain in 3 bullets with 1 example.",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: "template-demo-2",
+    title: "Critique + Improve",
+    category: "Prompt Pattern",
+    content: "Critique this prompt for clarity and safety, then rewrite it.",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: "template-demo-3",
+    title: "Step-by-step Plan",
+    category: "Automation",
+    content: "Generate a 5-step study plan with checkpoints and a summary.",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
 
 const isAdmin = t.middleware(({ ctx, next }) => {
   const email = ctx.session?.user?.email ?? "";
@@ -88,7 +166,7 @@ export const appRouter = router({
         }),
       )
       .mutation(async ({ ctx, input }) => {
-        if (input.privateMode || !ctx.session?.user?.id) {
+        if (!hasDatabase || input.privateMode || !ctx.session?.user?.id) {
           return { persisted: false };
         }
         await ctx.prisma.activityLog.create({
@@ -102,7 +180,7 @@ export const appRouter = router({
         return { persisted: true };
       }),
     list: publicProcedure.query(async ({ ctx }) => {
-      if (!ctx.session?.user?.id) return [];
+      if (!hasDatabase || !ctx.session?.user?.id) return [];
       return ctx.prisma.activityLog.findMany({
         where: { userId: ctx.session.user.id },
         orderBy: { createdAt: "desc" },
@@ -112,6 +190,9 @@ export const appRouter = router({
   }),
   courses: router({
     list: publicProcedure.query(async ({ ctx }) => {
+      if (!hasDatabase) {
+        return demoCourses;
+      }
       return ctx.prisma.course.findMany({
         include: { modules: { include: { lessons: true } } },
         orderBy: { createdAt: "asc" },
@@ -132,7 +213,12 @@ export const appRouter = router({
       ),
   }),
   promptTemplates: router({
-    list: publicProcedure.query(({ ctx }) => ctx.prisma.promptTemplate.findMany()),
+    list: publicProcedure.query(({ ctx }) => {
+      if (!hasDatabase) {
+        return demoPromptTemplates;
+      }
+      return ctx.prisma.promptTemplate.findMany();
+    }),
   }),
   automations: router({
     run: publicProcedure
@@ -146,7 +232,7 @@ export const appRouter = router({
         }),
       )
       .mutation(async ({ ctx, input }) => {
-        if (input.privateMode || !ctx.session?.user?.id) {
+        if (!hasDatabase || input.privateMode || !ctx.session?.user?.id) {
           return { persisted: false };
         }
         await ctx.prisma.automationRun.create({
