@@ -1,0 +1,19 @@
+{
+  "name": "lumina-ai-studio",
+  "private": true,
+  "packageManager": "npm@10.8.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm -w apps/web run dev",
+    "build": "npm -w apps/web run build",
+    "lint": "npm -w apps/web run lint",
+    "format": "npm -w apps/web run format",
+    "db:push": "npm -w packages/db run db:push",
+    "db:migrate": "npm -w packages/db run db:migrate",
+    "db:studio": "npm -w packages/db run db:studio",
+    "seed": "npm -w packages/db run seed"
+  }
+}
